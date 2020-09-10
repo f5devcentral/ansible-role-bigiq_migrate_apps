@@ -3,7 +3,7 @@
   include_role:
     name: f5devcentral.bigiq_pinning_deploy_objects
   vars:
-    bigiq_task_name: "Deployment through Ansible/API - Migration SSL Certificates"
+    bigiq_task_name: "Migration SSL Certificates - {{ new_bigiq_app_name }}"
     modules: 
     - name: ltm
       pins: "{{ certificates_array }}"
@@ -17,7 +17,7 @@
   include_role:
     name: f5devcentral.bigiq_pinning_deploy_objects
   vars:
-    bigiq_task_name: "Deployment through Ansible/API - Migration SSL Private Keys"
+    bigiq_task_name: "Migration SSL Private Keys - {{ new_bigiq_app_name }}"
     modules: 
     - name: ltm
       pins: "{{ privateKeys_array }}"
@@ -31,7 +31,7 @@
   include_role:
     name: f5devcentral.bigiq_pinning_deploy_objects
   vars:
-    bigiq_task_name: "Deployment through Ansible/API - Migration WAF Policies"
+    bigiq_task_name: "Migration WAF Policies - {{ new_bigiq_app_name }}"
     modules: 
     - name: asm
       pins: "{{ policyWAFs_array }}"
@@ -45,7 +45,7 @@
   include_role:
     name: f5devcentral.bigiq_pinning_deploy_objects
   vars:
-    bigiq_task_name: "Deployment through Ansible/API - Migration Security Logging Profiles"
+    bigiq_task_name: "Migration Security Logging Profiles - {{ new_bigiq_app_name }}"
     modules: 
     - name: shared_security
       pins: "{{ securityLogProfiles_array }}"
