@@ -38,12 +38,12 @@ for the **CM BIG-IQ** device.
 
 Define the tenant containing the AS3 application service to migrate to the new BIG-IP device.
 
-      dir_as3: ~/tmp # working directory to store migration files
+      dir_as3: ~/tmp # Working directory to store migration files on your local machine
       tenant_to_migrate: datacenter1
       new_tenant_name: us-east-1
-      new_bigiq_app_name: "App Services migrated"
-      new_device_address: 10.1.1.7 #IP address only
-      new_virtual_servers: # replace virtual server within the tenant (optional)
+      new_bigiq_app_name: "App Services migrated" # Name of the Application in BIG-IQ Dashboard which will contain the migrated App Services
+      new_device_address: 10.1.1.7 # IP address only
+      new_virtual_servers: # Replace virtual server within the tenant (optional)
         - { old: "10.1.10.101", new: "192.168.1.101" }
         - { old: "10.1.10.102", new: "192.168.1.102" }
       remove_old_tenant: false # false by default
