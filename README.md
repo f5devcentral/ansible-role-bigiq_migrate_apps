@@ -2,9 +2,9 @@
 
 Performs a series of steps needed to Migrate AS3 application service(s) with its referenced objects from a BIG-IP to another BIG-IP.
 
-Example: Migration from a BIG-IPs in 
+*Example: Migration from a BIG-IPs on Premise to Public Cloud. Migration from legacy BIG-IP platforms to new platforms.*
 
-Limitations/Prerequisites:
+**Limitations/Prerequisites:**
 
 - both devices need to be managed by BIG-IQ
 - migration of AS3 application services only
@@ -36,7 +36,7 @@ for the **CM BIG-IQ** device.
           loginProviderName: tmos
           validate_certs: no
 
-Define the list of application services ...
+Define the tenant containing the AS3 application service to migrate to the new BIG-IP device.
 
       dir_as3: ~/tmp # working directory to store migration files
       tenant_to_migrate: datacenter1
