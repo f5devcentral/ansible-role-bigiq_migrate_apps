@@ -1,1 +1,79 @@
-# ansible-role-bigiq_migrate_apps
+# Ansible Role: bigiq_migrate_apps
+
+Performs a series of steps needed to Migrate AS3 application service(s) with its referenced objects from a BIG-IP to another BIG-IP.
+
+Limitations:
+
+- only migrate AS3 application services
+- migration per AS3 tenants
+- migration of 1 tenant at a time
+- migration to a new tenant (same tenant name not supported)
+- AS3 /Common/shared tenant not supported
+- referenced objects must be located in /Common and have a unique name
+- referenced objects migrated: SSL Certificate and Key, Security Logging Profile, WAF Policy
+- SSL objects must be managed on BIG-IQ [more info](https://techdocs.f5.com/en-us/bigiq-7-1-0/managing-big-ip-devices-from-big-iq/ssl-certificates.html)
+
+## Role Variables
+
+Available variables are listed below. For their default values, see `defaults/main.yml`.
+
+Establishes initial connection to your BIG-IQ. These values are substituted into
+your ``provider`` module parameter. These values should be the connection parameters
+for the **CM BIG-IQ** device.
+
+        provider:
+          user: admin
+          server: 10.1.1.4
+          server_port: 443
+          password: secret
+          loginProviderName: tmos
+          validate_certs: no
+
+Define the list of application services ...
+
+      dir_as3: ~/tmp # working directory to store migration files
+      tenant_to_migrate: datacenter1
+      new_tenant_name: us-east-1
+      new_bigiq_app_name: "App Services migrated"
+      new_device_address: 10.1.1.7 #IP address only
+      new_virtual_servers: # replace virtual server within the tenant (optional)
+        - { old: "10.1.10.101", new: "192.168.1.101" }
+        - { old: "10.1.10.102", new: "192.168.1.102" }
+      remove_old_tenant: false # false by default
+
+## Example Playbook
+
+    ---
+    - hosts: all
+      connection: local
+      vars:
+        provider:
+          user: admin
+          server: "{{ ansible_host }}"
+          server_port: 443
+          password: secret
+          loginProviderName: tmos
+          validate_certs: no
+
+      tasks:
+          - name: Migrate AS3 application service(s) from a BIG-IP to another.
+            include_role:
+              name: f5devcentral.bigiq_migrate_apps
+            vars:
+              dir_as3: ~/tmp
+              tenant_to_migrate: datacenter1
+              new_tenant_name: us-east-1
+              new_bigiq_app_name: "App Services migrated"
+              new_device_address: 10.1.1.7
+            register: status
+
+## License
+
+Apache
+
+## Author Information
+
+This role was created in 2020 by [Romain Jouhannet](https://github.com/rjouhann).
+
+[1]: https://galaxy.ansible.com/f5devcentral/bigiq_pinning_deploy_objects
+

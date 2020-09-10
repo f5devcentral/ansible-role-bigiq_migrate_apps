@@ -1,0 +1,75 @@
+---
+- name: Setup provider and varables
+  set_fact:
+    provider: "{{ provider }}"
+
+- name: Get authentication token
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authn/login"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    body:
+      username: "{{ provider.user }}"
+      password: "{{ provider.password }}"
+      loginProviderName: "{{ provider.loginProviderName }}"
+    body_format: json
+  register: authtoken
+
+- name: Set the token fact if authentication succeeded
+  set_fact:
+    f5_auth_token: "{{ authtoken.json.token.token }}"
+  when: authtoken is success
+
+- name: Test authentication
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/echo"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+
+- name: Get device provisioning type
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/system/provisioning"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: rprov
+
+- name: Fail if you're running the role against a DCD device
+  fail:
+    msg: "This role should be run against a CM device, but you appear to be running it against a DCD device"
+  when: rprov.json.systemPersonality == 'logging_node'
+
+- name: Check if system is setup
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/system/setup"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: setupchk
+
+- name: Stop if the system is not setup
+  fail:
+    msg: "The CM device has not been setup. Please onboard the DCD device first."
+  when: setupchk.json.isSystemSetup is not defined or not setupchk.json.isSystemSetup|bool
+
+- name: Get AS3 declaration from the tenant user want to migrate and perform lots of parsing to get objects references and prepare apps migration
+  include_tasks: "parsing.yaml"
+
+# SSL cert, key, security logging profile and WAF policy in /Common supported only for now
+- name: Deploy objects referenced in AS3 declaration
+  include_tasks: "deploy_objects.yaml"
+
+- name: Deploy AS3 declaration to new device
+  include_tasks: "deploy_as3.yaml"
+
+- name: Cleanup old tenant
+  include_tasks: "cleanup.yaml"
+  when: 
+    - remove_old_tenant is defined
+    - remove_old_tenant | bool
