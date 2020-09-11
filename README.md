@@ -13,10 +13,12 @@ Performs a series of steps needed to Migrate AS3 application service(s) with its
 - app services have to be migrated to a **new tenant** (same tenant name not supported)
 - AS3 ``/Common/shared`` tenant not supported
 - referenced objects must be located in /Common and have a unique name across BIG-IQ
+- ALL referenced objects must be managed on BIG-IQ
 - referenced objects supported: 
   - SSL Certificate and Key (must be managed on BIG-IQ ([more info](https://techdocs.f5.com/en-us/bigiq-7-1-0/managing-big-ip-devices-from-big-iq/ssl-certificates.html)))
   - Security Logging Profile
   - WAF Policy
+
 
 If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_migrate_apps/issues).
 
