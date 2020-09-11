@@ -64,12 +64,19 @@
 # SSL cert, key, security logging profile and WAF policy in /Common supported only for now
 - name: Deploy objects referenced in AS3 declaration
   include_tasks: "deploy_objects.yaml"
+  when: 
+    - not deploy_as3_only
+    - not cleanup_only
 
 - name: Deploy AS3 declaration to new device
   include_tasks: "deploy_as3.yaml"
+  when: 
+    - not deploy_objects_only
+    - not cleanup_only 
 
 - name: Cleanup old tenant
   include_tasks: "cleanup.yaml"
   when: 
-    - remove_old_tenant is defined
-    - remove_old_tenant | bool
+    - remove_old_tenant
+    - not deploy_objects_only
+    - not deploy_as3_only

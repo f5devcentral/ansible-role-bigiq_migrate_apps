@@ -56,8 +56,15 @@ Define the tenant containing the AS3 application service to migrate to the new B
         - { old: "10.1.10.101", new: "192.168.1.101" }
         - { old: "10.1.10.102", new: "192.168.1.102" }
         
-      # false by default
-      remove_old_tenant: false 
+      # OPTIONAL: Remove old tenant - false by default
+      remove_old_tenant: false
+
+      # OPTIONAL: Execute each step independantly - false by default
+      deploy_objects_only: false
+      or
+      deploy_as3_only: false
+      or
+      cleanup_only: false
 
 ## Example Playbook
 
