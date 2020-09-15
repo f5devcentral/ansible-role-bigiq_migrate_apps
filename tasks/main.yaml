@@ -62,8 +62,6 @@
     msg: tenant_to_migrate must be different than new_tenant_name
   when:  tenant_to_migrate == new_tenant_name
 
-- meta: end_play
-
 - name: Get AS3 declaration from the tenant user want to migrate and perform lots of parsing to get objects references and prepare apps migration
   include_tasks: "parsing.yaml"
   when: 
