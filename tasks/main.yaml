@@ -58,8 +58,16 @@
     msg: "The CM device has not been setup. Please onboard the DCD device first."
   when: setupchk.json.isSystemSetup is not defined or not setupchk.json.isSystemSetup|bool
 
+- fail:
+    msg: tenant_to_migrate must be different than new_tenant_name
+  when:  tenant_to_migrate == new_tenant_name
+
+- meta: end_play
+
 - name: Get AS3 declaration from the tenant user want to migrate and perform lots of parsing to get objects references and prepare apps migration
   include_tasks: "parsing.yaml"
+  when: 
+    - not cleanup_only
 
 # SSL cert, key, security logging profile and WAF policy in /Common supported only for now
 - name: Deploy objects referenced in AS3 declaration
@@ -74,9 +82,28 @@
     - not deploy_objects_only
     - not cleanup_only 
 
-- name: Cleanup old tenant
-  include_tasks: "cleanup.yaml"
+- name: Get app services details to cleanup
+  include_tasks: "cleanup-get-apps-details.yaml"
   when: 
     - remove_old_tenant
     - not deploy_objects_only
     - not deploy_as3_only
+
+- name: Cleanup old tenant AS3 apps when device is reachable
+  include_tasks: "cleanup-apps.yaml"
+  when: 
+    - remove_old_tenant
+    - not deploy_objects_only
+    - not deploy_as3_only
+    - not old_device_not_reachable
+
+- name: Cleanup old tenant AS3 apps when device is NOT reachable
+  include_tasks: "cleanup-apps-unreachable.yaml"
+  when: 
+    - remove_old_tenant
+    - not deploy_objects_only
+    - not deploy_as3_only
+    - old_device_not_reachable
+  with_items: "{{ configSetNames }}"
+  loop_control:
+    loop_var: item2

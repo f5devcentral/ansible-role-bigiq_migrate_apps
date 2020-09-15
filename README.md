@@ -2,7 +2,11 @@
 
 Performs a series of steps needed to Migrate AS3 application service(s) with its referenced objects from a BIG-IP to another BIG-IP.
 
-*Example: Migration from a BIG-IPs on Premise to Public Cloud. Migration from legacy BIG-IP platforms to new platforms.*
+Examples: 
+
+- Migration from a BIG-IPs on Premise to Public Cloud.
+- Migration from legacy BIG-IP platforms to new platforms.
+- Migration from a not reachable BIG-IP to a replacement BIG-IP.
 
 **Limitations/Prerequisites:**
 
@@ -60,6 +64,9 @@ Define the tenant containing the AS3 application service to migrate to the new B
         
       # OPTIONAL: Remove old tenant - false by default
       remove_old_tenant: false
+
+      # OPTIONAL: If the device hosting the original application services is no longer reachable
+      old_device_not_reachable: false
 
       # OPTIONAL: Execute each step independantly - false by default
       deploy_objects_only: false
