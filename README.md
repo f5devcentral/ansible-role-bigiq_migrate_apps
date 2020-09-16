@@ -42,7 +42,7 @@ for the **CM BIG-IQ** device.
           loginProviderName: tmos
           validate_certs: no
 
-Define the tenant containing the AS3 application service to migrate to the new BIG-IP device.
+Define the variables to migrate AS3 application services from a tenant to a new BIG-IP device.
 
       # Working directory to store migration files on your local machine
       dir_as3: ~/tmp 
