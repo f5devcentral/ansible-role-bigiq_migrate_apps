@@ -45,7 +45,7 @@ for the **CM BIG-IQ** device.
           server: 10.1.1.4
           server_port: 443
           password: secret
-          loginProviderName: tmos
+          auth_provider: tmos
           validate_certs: no
 
 Define the variables to migrate AS3 application services from a tenant to a new BIG-IP device.
@@ -92,7 +92,7 @@ Define the variables to migrate AS3 application services from a tenant to a new 
           server: "{{ ansible_host }}"
           server_port: 443
           password: secret
-          loginProviderName: tmos
+          auth_provider: tmos
           validate_certs: no
 
       tasks:
