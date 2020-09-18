@@ -2,29 +2,35 @@
 
 Performs a series of steps needed to Migrate AS3 application service(s) with its referenced objects from a BIG-IP to another BIG-IP.
 
-Examples: 
-
+Examples:
 - Migration from a BIG-IPs on Premise to Public Cloud.
 - Migration from legacy BIG-IP platforms to new platforms.
 - Migration from a not reachable BIG-IP to a replacement BIG-IP.
 
-**Limitations/Prerequisites:**
+# Prerequisites
 
-- both devices need to be managed by BIG-IQ
-- migration of AS3 application services only
-- migration is per AS3 tenants
-- migration of 1 tenant at a time
-- app services have to be migrated to a **new tenant** (same tenant name not supported)
-- AS3 ``/Common/shared`` tenant not supported
-- referenced objects must be located in /Common and have a unique name across BIG-IQ
+- Install following galaxy roles:
+  - ansible-galaxy install f5devcentral.atc_deploy
+  - ansible-galaxy install f5devcentral.bigiq_pinning_deploy_objects
+  - ansible-galaxy install f5devcentral.bigiq_move_app_dashboard
+
+- Both devices need to be managed by BIG-IQ
 - ALL referenced objects must be managed on BIG-IQ
-- referenced objects supported: 
+- Referenced objects must be located in /Common and have a unique name across BIG-IQ
+- Referenced objects supported: 
   - SSL Certificate and Key (must be managed on BIG-IQ ([more info](https://techdocs.f5.com/en-us/bigiq-7-1-0/managing-big-ip-devices-from-big-iq/ssl-certificates.html)))
   - Security Logging Profile
   - WAF Policy
 
-
 If you are interested for other type of objects, [open an issue on GitHub](https://github.com/f5devcentral/ansible-role-bigiq_migrate_apps/issues).
+
+# Limitations
+
+- Migration of AS3 application services only
+- Migration is per AS3 tenants
+- Migration of 1 tenant at a time
+- App services have to be migrated to a **new tenant** (same tenant name not supported)
+- AS3 ``/Common/shared`` tenant not supported
 
 ## Role Variables
 
