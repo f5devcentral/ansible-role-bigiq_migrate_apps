@@ -3,6 +3,9 @@
   set_fact:
     provider: "{{ provider }}"
 
+- name: Install Galaxy roles and conditions
+  include_tasks: install-galaxy-roles-collections.yml
+
 - name: Get authentication token
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authn/login"
