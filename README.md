@@ -10,9 +10,9 @@ Examples:
 # Prerequisites
 
 - Install following galaxy roles:
-  - ansible-galaxy install f5devcentral.atc_deploy
-  - ansible-galaxy install f5devcentral.bigiq_pinning_deploy_objects
-  - ansible-galaxy install f5devcentral.bigiq_move_app_dashboard
+  - ``ansible-galaxy install f5devcentral.atc_deploy --force``
+  - ``ansible-galaxy install f5devcentral.bigiq_pinning_deploy_objects --force``
+  - ``ansible-galaxy install f5devcentral.bigiq_move_app_dashboard --force``
 
 - Both devices need to be managed by BIG-IQ
 - ALL referenced objects must be managed on BIG-IQ
@@ -46,7 +46,7 @@ for the **CM BIG-IQ** device.
           server_port: 443
           password: secret
           auth_provider: tmos
-          validate_certs: no
+          validate_certs: false
 
 Define the variables to migrate AS3 application services from a tenant to a new BIG-IP device.
 
@@ -93,7 +93,7 @@ Define the variables to migrate AS3 application services from a tenant to a new 
           server_port: 443
           password: secret
           auth_provider: tmos
-          validate_certs: no
+          validate_certs: false
 
       tasks:
           - name: Migrate AS3 application service(s) from a BIG-IP to another.

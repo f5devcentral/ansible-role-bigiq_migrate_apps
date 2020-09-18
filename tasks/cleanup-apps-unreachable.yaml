@@ -14,7 +14,7 @@
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tasks/force-delete"
     method: POST
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"
@@ -31,7 +31,7 @@
   uri:
     url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tasks/force-delete/{{ json_response.json.id }}"
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       Content-Type: application/json
       X-F5-Auth-Token: "{{ f5_auth_token }}"

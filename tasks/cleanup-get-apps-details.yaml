@@ -11,7 +11,7 @@
     url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tenants?$filter=name%20eq%20'{{ tenant_to_migrate }}'
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
     status_code: 200, 202
@@ -28,7 +28,7 @@
     url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/config-sets?$filter=tenantReference.link%20eq%20'{{ old_tenant_selfLink }}'
     method: GET
     timeout: "{{ timeout }}"
-    validate_certs: "{{ validate_certs }}"
+    validate_certs: "{{ provider.validate_certs }}"
     headers:
       X-F5-Auth-Token: "{{ f5_auth_token }}"
     status_code: 200, 202

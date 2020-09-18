@@ -3,10 +3,10 @@
   command: ansible-galaxy install f5devcentral.atc_deploy
 
 - name: Install role from Ansible Galaxy bigiq_move_app_dashboard
-  command: ansible-galaxy install f5devcentral.bigiq_move_app_dashboard
+  command: ansible-galaxy install f5devcentral.bigiq_move_app_dashboard --force
 
 - name: Install role from Ansible Galaxy bigiq_pinning_deploy_objects
-  command: ansible-galaxy install f5devcentral.bigiq_pinning_deploy_objects
+  command: ansible-galaxy install f5devcentral.bigiq_pinning_deploy_objects --force
 
 - name: show downloaded roles
   command: ansible-galaxy list
