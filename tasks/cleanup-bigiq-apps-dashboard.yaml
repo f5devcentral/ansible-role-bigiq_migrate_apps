@@ -1,5 +1,4 @@
 ---
-
 # Delete old Global Apps which are empty in BIG-IQ Dashboard
 - name: Retreive all BIG-IQ (global) Apps
   uri:

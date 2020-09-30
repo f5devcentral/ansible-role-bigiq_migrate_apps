@@ -1,5 +1,4 @@
 ---
-
 - name: Confirm deletion
   pause:
     prompt: "\n- Confirm the device {{ old_device_address.target.address }} is unreachable.

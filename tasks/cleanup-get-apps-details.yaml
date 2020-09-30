@@ -43,4 +43,3 @@
 - name: Application Services which will be deleted
   debug:
     msg: "{{ configSetNames }}"
-

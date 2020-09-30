@@ -54,4 +54,3 @@
   when: 
     - securityLogProfiles_array is defined
     - securityLogProfiles_array | length > 0
-
