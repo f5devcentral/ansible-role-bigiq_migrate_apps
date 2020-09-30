@@ -52,17 +52,18 @@ Define the variables to migrate AS3 application services from a tenant to a new 
 
       # Working directory to store migration files on your local machine
       dir_as3: ~/tmp 
-      
+
+      # BIG-IP device source where tenant_to_migrate is located
+      device_address: 10.1.1.8
       tenant_to_migrate: datacenter1
-      
+
+      # Target BIG-IP device where the tenant will be migrated
+      new_device_address: 10.1.1.7 
       new_tenant_name: us-east-1
       
       # Name of the Application in BIG-IQ Dashboard which will contain the migrated App Services
       new_bigiq_app_name: "App Services migrated"
       
-      # Target BIG-IP device, IP address only
-      new_device_address: 10.1.1.7 
-
       # OPTIONAL: Replace virtual server within the tenant
       new_virtual_servers: 
         - { old: "10.1.10.101", new: "192.168.1.101" }
@@ -101,10 +102,11 @@ Define the variables to migrate AS3 application services from a tenant to a new 
               name: f5devcentral.bigiq_migrate_apps
             vars:
               dir_as3: ~/tmp
+              device_address: 10.1.1.8
               tenant_to_migrate: datacenter1
+              new_device_address: 10.1.1.9
               new_tenant_name: us-east-1
               new_bigiq_app_name: "App Services migrated"
-              new_device_address: 10.1.1.7
             register: status
 
 ## License

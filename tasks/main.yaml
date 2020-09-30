@@ -63,6 +63,10 @@
 - fail:
     msg: tenant_to_migrate must be different than new_tenant_name
   when:  tenant_to_migrate == new_tenant_name
+  
+- fail:
+    msg: device_address must be different than new_device_address
+  when:  device_address == new_device_address
 
 - name: Get AS3 declaration from the tenant user want to migrate and perform lots of parsing to get objects references and prepare apps migration
   include_tasks: "parsing.yaml"

@@ -12,7 +12,7 @@
 # Retrieve AS3 declarations in Tenant
 - name: Get AS3 declaration for the tenant specified {{ tenant_to_migrate }}
   uri:
-    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tenants?$filter=name%20eq%20'{{ tenant_to_migrate }}'
+    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tenants?$filter=name%20eq%20'{{ tenant_to_migrate }}'%20and%20body.target.address%20eq%20'{{ device_address }}...{{ device_address }}'
     method: GET
     timeout: "{{ timeout }}"
     validate_certs: "{{ provider.validate_certs }}"
@@ -60,7 +60,9 @@
   debug:
     msg: "old: {{ item.old }} - new: {{ item.new }}"
   with_items: "{{ new_virtual_servers }}"
-  when: new_virtual_servers | length > 0
+  when: 
+    - new_virtual_servers is defined
+    - new_virtual_servers | length > 0
 
 - name: Replace Virtual IP Addresses in the declaration body (if specified)
   replace:
@@ -68,7 +70,9 @@
     regexp: '"{{ item.old }}"'
     replace: '"{{ item.new }}"'
   with_items: "{{ new_virtual_servers }}"
-  when: new_virtual_servers | length > 0
+  when: 
+    - new_virtual_servers is defined
+    - new_virtual_servers | length > 0
 
 ### Look for objects referenced in the AS3 declaration in order to pin & deploy them to the new BIG-IP where the app service will be move to
 - name: Load AS3 tenant
