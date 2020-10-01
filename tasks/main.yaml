@@ -2,6 +2,7 @@
 - name: Setup provider and varables
   set_fact:
     provider: "{{ provider }}"
+
 - name: Install Galaxy roles and conditions
   include_tasks: install-galaxy-roles-collections.yml
 
