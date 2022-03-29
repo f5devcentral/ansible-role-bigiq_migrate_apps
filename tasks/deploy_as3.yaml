@@ -61,5 +61,5 @@
   vars:
       apps: 
       - name: "{{ new_bigiq_app_name }}"
-        pins: "{{ configSetNames_array }}"
+        pin: "{{ configSetNames_array }}"
   register: status

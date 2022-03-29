@@ -6,7 +6,7 @@
     bigiq_task_name: "Migration SSL Certificates - {{ new_bigiq_app_name }}"
     modules: 
     - name: ltm
-      pins: "{{ certificates_array }}"
+      pin: "{{ certificates_array }}"
     device_address: "{{ new_device_address }}"
   register: status
   when: 
@@ -20,7 +20,7 @@
     bigiq_task_name: "Migration SSL Private Keys - {{ new_bigiq_app_name }}"
     modules: 
     - name: ltm
-      pins: "{{ privateKeys_array }}"
+      pin: "{{ privateKeys_array }}"
     device_address: "{{ new_device_address }}"
   register: status
   when: 
@@ -34,7 +34,7 @@
     bigiq_task_name: "Migration WAF Policies - {{ new_bigiq_app_name }}"
     modules: 
     - name: asm
-      pins: "{{ policyWAFs_array }}"
+      pin: "{{ policyWAFs_array }}"
     device_address: "{{ new_device_address }}"
   register: status
   when: 
@@ -48,7 +48,7 @@
     bigiq_task_name: "Migration Security Logging Profiles - {{ new_bigiq_app_name }}"
     modules: 
     - name: shared_security
-      pins: "{{ securityLogProfiles_array }}"
+      pin: "{{ securityLogProfiles_array }}"
     device_address: "{{ new_device_address }}"
   register: status
   when: 
